@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://snowmtlion2.github.io">
-  <title>categories | YZHU</title>
+  <title>【Python实战】Pandas：让你像写SQL一样做数据分析 | YZHU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://snowmtlion2.github.io/categories/index.html">
+  <meta name="description" content="1. 引言Pandas是一个开源的Python数据分析库。Pandas把结构化数据分为了三类： Series，1维序列，可视作为没有column名的、只有一个column的DataFrame；DataFrame，同Spark SQL中的DataFrame一样，其概念来自于R语言，为多column并schema化的2维结构化数据，可视作为Series的容器（container）；Panel，为3维的">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python实战】Pandas：让你像写SQL一样做数据分析">
+<meta property="og:url" content="https://snowmtlion2.github.io/2019/09/25/【Python实战】Pandas：让你像写SQL一样做数据分析/index.html">
 <meta property="og:site_name" content="YZHU">
+<meta property="og:description" content="1. 引言Pandas是一个开源的Python数据分析库。Pandas把结构化数据分为了三类： Series，1维序列，可视作为没有column名的、只有一个column的DataFrame；DataFrame，同Spark SQL中的DataFrame一样，其概念来自于R语言，为多column并schema化的2维结构化数据，可视作为Series的容器（container）；Panel，为3维的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-23T02:14:25.569Z">
+<meta property="og:updated_time" content="2019-09-25T01:39:11.605Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="【Python实战】Pandas：让你像写SQL一样做数据分析">
+<meta name="twitter:description" content="1. 引言Pandas是一个开源的Python数据分析库。Pandas把结构化数据分为了三类： Series，1维序列，可视作为没有column名的、只有一个column的DataFrame；DataFrame，同Spark SQL中的DataFrame一样，其概念来自于R语言，为多column并schema化的2维结构化数据，可视作为Series的容器（container）；Panel，为3维的">
   
     <link rel="alternative" href="/atom.xml" title="YZHU" type="application/atom+xml">
   
@@ -166,27 +170,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-【Python实战】Pandas：让你像写SQL一样做数据分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      categories
+      【Python实战】Pandas：让你像写SQL一样做数据分析
     </h1>
   
 
         
-        <a href="/categories/index.html" class="archive-article-date">
-  	<time datetime="2019-09-21T06:47:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-21</time>
+        <a href="/2019/09/25/【Python实战】Pandas：让你像写SQL一样做数据分析/" class="archive-article-date">
+  	<time datetime="2019-09-25T01:37:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><p>Pandas是一个开源的Python数据分析库。Pandas把结构化数据分为了三类：</p>
+<p>Series，1维序列，可视作为没有column名的、只有一个column的DataFrame；<br>DataFrame，同Spark SQL中的DataFrame一样，其概念来自于R语言，为多column并schema化的2维结构化数据，可视作为Series的容器（container）；<br>Panel，为3维的结构化数据，可视作为DataFrame的容器；<br>DataFrame较为常见，因此本文主要讨论内容将为DataFrame。DataFrame的生成可通过读取纯文本、Json等数据来生成，亦可以通过Python对象来生成：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">'total_bill'</span>: [16.99, 10.34, 23.68, 23.68, 24.59],</span><br><span class="line">                   <span class="string">'tip'</span>: [1.01, 1.66, 3.50, 3.31, 3.61],</span><br><span class="line">                   <span class="string">'sex'</span>: [<span class="string">'Female'</span>, <span class="string">'Male'</span>, <span class="string">'Male'</span>, <span class="string">'Male'</span>, <span class="string">'Female'</span>]&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>&lt;–more–&gt;</p>
+
       
 
       
@@ -220,6 +229,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -270,7 +290,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://snowmtlion2.github.io/categories/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://snowmtlion2.github.io/2019/09/25/【Python实战】Pandas：让你像写SQL一样做数据分析/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -282,6 +302,16 @@
 </article>
 
   
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/22/Markdown-编辑器使用说明/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Markdown 编辑器使用说明</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -303,7 +333,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-引言"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -317,7 +347,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="" data-title="categories" data-url="https://snowmtlion2.github.io/categories/index.html"></div>
+	<div class="ds-thread" data-thread-key="【Python实战】Pandas：让你像写SQL一样做数据分析" data-title="【Python实战】Pandas：让你像写SQL一样做数据分析" data-url="https://snowmtlion2.github.io/2019/09/25/【Python实战】Pandas：让你像写SQL一样做数据分析/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -340,8 +370,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "https://snowmtlion2.github.io/categories/index.html", 
-    sourceId: "",
+    url: "https://snowmtlion2.github.io/2019/09/25/【Python实战】Pandas：让你像写SQL一样做数据分析/", 
+    sourceId: "【Python实战】Pandas：让你像写SQL一样做数据分析",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
@@ -350,7 +380,7 @@
   
 
   
-  <div id="SOHUCS" sid="" ></div> 
+  <div id="SOHUCS" sid="【Python实战】Pandas：让你像写SQL一样做数据分析" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
@@ -386,7 +416,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
