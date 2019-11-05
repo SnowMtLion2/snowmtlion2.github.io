@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="YZHU">
 <meta property="og:description" content="1. 数据库对象命名规范数据库对象命名规范的对象是指数据库SCHEMA、表TABLE、索引INDEX、约束CONSTRAINTS等的命名约定 数据库对象命名原则 命名使用具有意义的英文词汇，词汇中间以下划线分隔 命名只能使用英文字母、数字、下划线 避免用MySQL的保留字如：call、group等 所有数据库对象使用小写字母">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-27T00:37:16.743Z">
+<meta property="og:updated_time" content="2019-09-27T01:37:36.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="专业的MySQL开发规范">
 <meta name="twitter:description" content="1. 数据库对象命名规范数据库对象命名规范的对象是指数据库SCHEMA、表TABLE、索引INDEX、约束CONSTRAINTS等的命名约定 数据库对象命名原则 命名使用具有意义的英文词汇，词汇中间以下划线分隔 命名只能使用英文字母、数字、下划线 避免用MySQL的保留字如：call、group等 所有数据库对象使用小写字母">
@@ -84,7 +84,7 @@
             
 		</nav>
 		<nav class="header-smart-menu">
-		总文章数 8
+		总文章数 9
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
@@ -276,8 +276,17 @@
 <li>分页查询语句全部都需要带有排序条件,除非应用方明确要求不要使用任何排序来随机展示数据</li>
 <li>WHERE条件中严禁在索引列上进行数学运算或函数运算</li>
 <li>用in()/union替换or，并注意in的个数小于30</li>
-<li>严禁使用%前缀进行模糊前缀查询:如：select id,val from table where val like ‘%name’;可以使用%模糊后缀查询如：select id,val from table where val like ‘name%’</li>
-<li>严禁使用INSERT ON DUPLICATE KEY UPDATE、REPLACE INTO、INSERT IGNORE</li>
+<li><strong>严禁使用%前缀进行模糊前缀查询,如：</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,val <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> val <span class="keyword">like</span> ‘%<span class="keyword">name</span>’;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>** 可以使用%模糊后缀查询如：** </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,val <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> val <span class="keyword">like</span> ‘<span class="keyword">name</span>%’</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>** 严禁使用**<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">ON</span> <span class="keyword">DUPLICATE</span> <span class="keyword">KEY</span> <span class="keyword">UPDATE</span>、<span class="keyword">REPLACE</span> <span class="keyword">INTO</span>、<span class="keyword">INSERT</span> <span class="keyword">IGNORE</span></span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
 
       
@@ -387,6 +396,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/11/05/SAS转置技巧-—-辅助变量/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          SAS转置技巧 — 辅助变量
+        
+      </div>
+    </a>
   
   
     <a href="/2019/09/26/DataFrame-输出其他格式文件的方法/" id="article-nav-older" class="article-nav-link-wrap">
@@ -574,11 +592,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color4">SAS</a>
               </li>
              
               <li class="article-tag-list-item">

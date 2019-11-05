@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://snowmtlion2.github.io">
-  <title>Archives: 2018 | YZHU</title>
+  <title>SAS转置技巧 — 辅助变量 | YZHU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YZHU">
-<meta property="og:url" content="https://snowmtlion2.github.io/archives/2018/index.html">
+  <meta name="description" content="例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下： 12345678910111213data ex;	input group $ var1 var2 ;	cards;	a 1 5	a 2 6	a 3 7	b 3 7	b 4 8	b 5 9	c 3 4	c 6 8	;run;  如果用数组也可以搞定的，代码如下：">
+<meta name="keywords" content="SAS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAS转置技巧 — 辅助变量">
+<meta property="og:url" content="https://snowmtlion2.github.io/2019/11/05/SAS转置技巧-—-辅助变量/index.html">
 <meta property="og:site_name" content="YZHU">
+<meta property="og:description" content="例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下： 12345678910111213data ex;	input group $ var1 var2 ;	cards;	a 1 5	a 2 6	a 3 7	b 3 7	b 4 8	b 5 9	c 3 4	c 6 8	;run;  如果用数组也可以搞定的，代码如下：">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://snowmtlion2.github.io/images/%E7%9F%A9%E9%98%B5%E8%BD%AC%E7%BD%AE2.jpg">
+<meta property="og:updated_time" content="2019-11-05T01:00:33.118Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YZHU">
+<meta name="twitter:title" content="SAS转置技巧 — 辅助变量">
+<meta name="twitter:description" content="例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下： 12345678910111213data ex;	input group $ var1 var2 ;	cards;	a 1 5	a 2 6	a 3 7	b 3 7	b 4 8	b 5 9	c 3 4	c 6 8	;run;  如果用数组也可以搞定的，代码如下：">
+<meta name="twitter:image" content="https://snowmtlion2.github.io/images/%E7%9F%A9%E9%98%B5%E8%BD%AC%E7%BD%AE2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="YZHU" type="application/atom+xml">
   
@@ -165,60 +172,237 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-SAS转置技巧-—-辅助变量" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/21/hello-world/" class="archive-article-date">
-  	<time datetime="2018-09-21T06:16:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/21/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      SAS转置技巧 — 辅助变量
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
+        
+        <a href="/2019/11/05/SAS转置技巧-—-辅助变量/" class="archive-article-date">
+  	<time datetime="2019-11-05T00:37:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">data ex;</span><br><span class="line">	input group $ var1 var2 ;</span><br><span class="line">	cards;</span><br><span class="line">	a 1 5</span><br><span class="line">	a 2 6</span><br><span class="line">	a 3 7</span><br><span class="line">	b 3 7</span><br><span class="line">	b 4 8</span><br><span class="line">	b 5 9</span><br><span class="line">	c 3 4</span><br><span class="line">	c 6 8</span><br><span class="line">	;</span><br><span class="line">run;</span><br></pre></td></tr></table></figure>
+
+<p>如果用数组也可以搞定的，代码如下：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">data ccc(keep=group v new_var);</span><br><span class="line">	set ex;</span><br><span class="line">	array arr var1 var2;</span><br><span class="line">	do over arr;</span><br><span class="line">	v=vname(arr);</span><br><span class="line">	new_var=arr;</span><br><span class="line">	output;</span><br><span class="line">	end;</span><br><span class="line">run;</span><br></pre></td></tr></table></figure>
+
+<p>不过我更倾向于直观的转置方法，增加一个辅助变量tem_N，搞定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data sxl;</span><br><span class="line">	set ex;</span><br><span class="line">	tem_N =_N_;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">proc transpose data=sxl out=sxl2(drop= tem_N)</span><br><span class="line">	NAME=v prefix=New_var;</span><br><span class="line">	var var:;</span><br><span class="line">	by group tem_N;</span><br><span class="line">run;</span><br></pre></td></tr></table></figure>
+
+<p>例2， 这是在网上搜到的webgu的一篇博文讨论的问题，见：<a href="http://blog.sina.com.cn/s/blog_41889b900100vk1w.html。" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_41889b900100vk1w.html。</a><br>下面这个转换比较麻烦，需要用到3次矩阵转置，与webgu的方法相比，这个更具有通用性。比如说在原数据再增加一个变量（即增加一列）,下面代码照常Ok。</p>
+<p><img src="/images/%E7%9F%A9%E9%98%B5%E8%BD%AC%E7%BD%AE2.jpg" alt="Alt text"><br>【Hexo不知道对路径做了什么处理，可以参考：可以考虑修改_config.yml中的permalink或参考<a href="https://hexo.io/zh-cn/docs/asset-folders.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders.html</a> #文章资源文件夹。】</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/随笔//" class="article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SAS</a>
         		</li>
       		
 		</ul>
 	</div>
 
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://snowmtlion2.github.io/2019/11/05/SAS转置技巧-—-辅助变量/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/09/27/专业的MySQL开发规范/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">专业的MySQL开发规范</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="SAS转置技巧-—-辅助变量" data-title="SAS转置技巧 — 辅助变量" data-url="https://snowmtlion2.github.io/2019/11/05/SAS转置技巧-—-辅助变量/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
+  
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+<script>
+  var cloudTieConfig = {
+    url: "https://snowmtlion2.github.io/2019/11/05/SAS转置技巧-—-辅助变量/", 
+    sourceId: "SAS转置技巧-—-辅助变量",
+    productKey: "true",
+    target: "cloud-tie-wrapper"
+  };
+</script>
+<script src="//img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
   
 
-    
+  
+  <div id="SOHUCS" sid="SAS转置技巧-—-辅助变量" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
+  
+
+  
+
+  
 
 
           </div>
@@ -241,8 +425,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
