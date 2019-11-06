@@ -17,7 +17,7 @@
 <meta property="og:description" content="例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下： 12345678910111213data ex;	input group $ var1 var2 ;	cards;	a 1 5	a 2 6	a 3 7	b 3 7	b 4 8	b 5 9	c 3 4	c 6 8	;run;  如果用数组也可以搞定的，代码如下：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://snowmtlion2.github.io/images/%E7%9F%A9%E9%98%B5%E8%BD%AC%E7%BD%AE2.jpg">
-<meta property="og:updated_time" content="2019-11-05T01:00:33.118Z">
+<meta property="og:updated_time" content="2019-11-05T01:05:12.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SAS转置技巧 — 辅助变量">
 <meta name="twitter:description" content="例1：最近遇到一个需要对数据集进行操作的小问题，在SAS帮助proc transpose里面没找到例子，数据形式如下： 12345678910111213data ex;	input group $ var1 var2 ;	cards;	a 1 5	a 2 6	a 3 7	b 3 7	b 4 8	b 5 9	c 3 4	c 6 8	;run;  如果用数组也可以搞定的，代码如下：">
@@ -86,7 +86,7 @@
             
 		</nav>
 		<nav class="header-smart-menu">
-		总文章数 9
+		总文章数 10
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
@@ -204,6 +204,13 @@
 
 <p>例2， 这是在网上搜到的webgu的一篇博文讨论的问题，见：<a href="http://blog.sina.com.cn/s/blog_41889b900100vk1w.html。" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_41889b900100vk1w.html。</a><br>下面这个转换比较麻烦，需要用到3次矩阵转置，与webgu的方法相比，这个更具有通用性。比如说在原数据再增加一个变量（即增加一列）,下面代码照常Ok。</p>
 <p><img src="/images/%E7%9F%A9%E9%98%B5%E8%BD%AC%E7%BD%AE2.jpg" alt="Alt text"><br>【Hexo不知道对路径做了什么处理，可以参考：可以考虑修改_config.yml中的permalink或参考<a href="https://hexo.io/zh-cn/docs/asset-folders.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders.html</a> #文章资源文件夹。】</p>
+<p>原数据如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">data ex1;</span><br><span class="line">	input name $ date res;</span><br><span class="line">	cards;</span><br><span class="line">	amy 2323 111</span><br><span class="line">	amy 2323 555</span><br><span class="line">	amy 1111 855</span><br><span class="line">	bob 3333 645</span><br><span class="line">	bob 0994 354</span><br><span class="line">	bob 4344 954</span><br><span class="line">	;</span><br><span class="line">run;</span><br></pre></td></tr></table></figure>
+
+<p>代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">proc transpose out=ex2;</span><br><span class="line">	by name;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">data ex3;</span><br><span class="line">	set ex2;</span><br><span class="line">	num=_N_;</span><br><span class="line">run;</span><br><span class="line">proc sort data=ex3 out=ex3;</span><br><span class="line">	by _name_;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">proc transpose data=ex3 out=ex4;</span><br><span class="line">	var col:;</span><br><span class="line">	by _name_ ;</span><br><span class="line">	id name;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">proc sort data=ex4 out=ex4;</span><br><span class="line">	by _name_;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">data ex5;</span><br><span class="line">	set ex4;</span><br><span class="line">	by _name_;</span><br><span class="line">	if first._name_ then nb=0;</span><br><span class="line">	nb+1;</span><br><span class="line">	name=catt(_name_,nb);</span><br><span class="line">	output;</span><br><span class="line">run;</span><br><span class="line"></span><br><span class="line">proc transpose name=id;</span><br><span class="line">	var amy bob;</span><br><span class="line">	id name;</span><br><span class="line">run;</span><br></pre></td></tr></table></figure>
+
+<p>最后需要提醒一下，SAS转置存在一定的缺点，就是数据集太大的时候，需要消耗太大的内存，导致死机。</p>
 
       
 
@@ -312,6 +319,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/11/05/SAS导入CSV、TXT文件技巧/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          SAS导入CSV、TXT文件技巧
+        
+      </div>
+    </a>
   
   
     <a href="/2019/09/27/专业的MySQL开发规范/" id="article-nav-older" class="article-nav-link-wrap">
